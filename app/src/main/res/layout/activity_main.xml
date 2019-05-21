@@ -4,51 +4,75 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
     android:orientation="vertical"
-    >
+    tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:text="Bienvenue sur l'appli IMC"
-        android:textColor="@color/white"
-        android:textSize="24sp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:paddingLeft="10dp"
-        android:gravity="center_vertical"
-        android:text="Taille en cm : " />
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp">
 
-    <EditText
-        android:id="@+id/edt_taille"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:hint="Voire taille .."
-        android:inputType="textPersonName" />
+            <RadioButton
+                android:id="@+id/radio_btn_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Homme" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:paddingLeft="10dp"
-        android:gravity="center_vertical"
-        android:text="Poids en kg : " />
+            <RadioButton
+                android:id="@+id/radio_btn_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Femme" />
+        </RadioGroup>
 
-    <EditText
-        android:id="@+id/edt_poids"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:ems="10"
-        android:hint="Votre poids .."
-        android:inputType="textPersonName" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="Taille en cm : " />
+
+            <EditText
+                android:id="@+id/edt_taille"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:ems="10"
+                android:hint="Voire taille .."
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="Poids en kg : " />
+
+            <EditText
+                android:id="@+id/edt_poids"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:ems="10"
+                android:hint="Votre poids .."
+                android:inputType="numberDecimal" />
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/btn_submit"
@@ -56,22 +80,13 @@
         android:layout_height="wrap_content"
         android:text="Calculer mon IMC" />
 
-    <TextView
-        android:id="@+id/txt_result"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="70dp"
-        android:paddingLeft="10dp"
-        android:gravity="center_vertical"
-        android:text="Résultat" />
 
-    <TextView
-        android:id="@+id/txt_analyse"
+    <Button
+        android:id="@+id/btn_scan"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:gravity="center"
-        android:text="Interprétation"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="18sp"
-        app:fontFamily="casual" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:text="Aller au Scanner" />
+
+
 </LinearLayout>
