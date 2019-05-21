@@ -22,8 +22,7 @@ public class ResultActivity extends AppCompatActivity {
         image_result = findViewById(R.id.image_result);
 
         // get Extras
-
-        Float resultImc = Float.valueOf(this.getIntent().getStringExtra("keyIMC"));
+        int resultImc = Integer.valueOf(this.getIntent().getStringExtra("keyIMC"));
         String resultSex = this.getIntent().getStringExtra("sex");
 
         txt_result.setText(resultSex + " avec un IMC de : " + resultImc);
@@ -31,7 +30,7 @@ public class ResultActivity extends AppCompatActivity {
 
         txt_analyse.setText("Vous êtes en : ");
 
-        if (resultImc < 16.5) {
+        if (resultImc < 16) {
             txt_analyse.append("sous-alimentation");
             image_result.setImageDrawable(getResources().getDrawable(R.drawable.ic_smyley_very_sad));
         } else if (resultImc < 20) {

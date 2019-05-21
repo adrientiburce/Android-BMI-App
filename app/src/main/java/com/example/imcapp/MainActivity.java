@@ -1,6 +1,8 @@
 package com.example.imcapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -13,9 +15,12 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements TextWatcher {
+import java.io.Serializable;
+
+public class MainActivity extends AppCompatActivity implements TextWatcher, Serializable {
 
     private EditText edt_poids, edt_taille;
+    private TextView txt_welcome;
 
     //private Editable editable;
     private Button mButton, mScanBtn;
@@ -33,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         // wire widgets
         edt_poids = findViewById(R.id.edt_poids);
         edt_taille = findViewById(R.id.edt_taille);
+        txt_welcome = findViewById(R.id.txt_welcome);
         mButton = findViewById(R.id.btn_submit);
         mScanBtn = findViewById(R.id.btn_scan);
         radionBtnMan = findViewById(R.id.radio_btn_man);
@@ -50,10 +56,11 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
                 Intent secondActivity = new Intent(MainActivity.this, ResultActivity.class);
 
 
-                Float resultImc;
+                // get resultImc & resultSex => send as Extra
+                Float floatResultImc;
                 Float poids = Float.valueOf(edt_poids.getText().toString());
-                Float taille = Float.valueOf(edt_taille.getText().toString()) / 100;  // en metre dans la formule
-                resultImc = poids / (taille * taille);
+                Float taille = Float.valueOf(edt_taille.getText().toString()) / 100;
+                floatResultImc = poids / (taille * taille);
 
                 String resultSex = "Vous"; // 1 : men, 2 woman
                 if (radionBtnMan.isChecked()) {
@@ -62,10 +69,21 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
                 if (radionBtnWoman.isChecked()) {
                     resultSex = "Femme";
                 }
+
+                int resultImc = Math.round(floatResultImc);
+
                 secondActivity.putExtra("keyIMC", String.valueOf(resultImc));
                 secondActivity.putExtra("sex", resultSex);
-                startActivity(secondActivity);
 
+                //add lastImc to Preferences
+                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.clear();
+
+                editor.putString("lastImc", String.valueOf(resultImc));
+                editor.apply();
+
+                startActivity(secondActivity);
 
             }
         });
@@ -81,7 +99,22 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        SharedPreferences settings =
+                PreferenceManager.getDefaultSharedPreferences(this);
+        String lastImc = settings.getString("lastImc", "");
+        txt_welcome.setText("Votre dernier IMC était : " + lastImc);
+    }
+
+    @Override
     public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+    }
+
+    @Override
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
 
     }
 
@@ -97,11 +130,6 @@ public class MainActivity extends AppCompatActivity implements TextWatcher {
         if(hasPoids && hasTaille){
             mButton.setEnabled(true);
         }
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
     }
 
 }
